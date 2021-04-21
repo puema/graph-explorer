@@ -1,5 +1,6 @@
 {
   "private": true,
+  "license": "NO LICENSE",
   "name": "buzzword-map",
   "version": "0.1.0",
   "description": "Interactive map of tech buzzwords relevant at Netlight",
@@ -7,7 +8,11 @@
   "scripts": {
     "start": "yarn webpack serve --config config/webpack.config.js"
   },
+  "sideEffects": [
+    "./src/node.ts"
+  ],
   "devDependencies": {
+    "@types/d3": "^6.3.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.24.0",
@@ -28,5 +33,11 @@
       "prettier"
     ],
     "parser": "@typescript-eslint/parser"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "dependencies": {
+    "d3-selection": "^2.0.0"
   }
 }

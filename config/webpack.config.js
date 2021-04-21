@@ -6,6 +6,9 @@ module.exports = function (env) {
   return {
     mode: env === 'production' ? 'production' : 'development',
     entry: './src/index.ts',
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+    },
     module: {
       rules: [
         {
@@ -14,15 +17,15 @@ module.exports = function (env) {
           exclude: /node_modules/,
           options: {
             // disable type checker - we will use it in fork plugin
-            transpileOnly: true
-          }
-        }
-      ]
+            transpileOnly: true,
+          },
+        },
+      ],
     },
     plugins: [
       new ForkTsCheckerWebpackPlugin(),
       new HtmlWebpackPlugin({
-        template: 'src/index.html'
+        template: 'src/index.html',
       }),
     ],
     devServer: {
@@ -31,4 +34,4 @@ module.exports = function (env) {
       port: 3000,
     },
   };
-}
+};

@@ -1,5 +1,6 @@
-const p = document.createElement('p');
-p.innerText = 'works!!';
-document.body.append(p);
+import { select } from 'd3-selection';
 
-export {};
+import './node';
+import { createGraph } from './graph';
+
+select('button').on('click', createGraph);
