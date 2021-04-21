@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "buzzword-map",
+  "version": "0.1.0",
+  "description": "Interacitve map of tech buzzwords relevant at Netlight",
+  "main": "index.js",
+  "author": "Netlight"
+}
