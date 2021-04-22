@@ -36,12 +36,13 @@ const label = css`
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, calc(-100% - 4px));
 `;
 
 const bubbleOuter = css`
   border-radius: 100%;
   border: solid 2px #b3b3b3;
+  box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.5);
 `;
 
 const bubbleInner = css`
