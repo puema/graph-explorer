@@ -1,0 +1,13 @@
+{
+  "nodes": [
+    { "id": "frontend" },
+    { "id": "react" },
+    { "id": "angular" },
+    { "id": "vue" }
+  ],
+  "edges": [
+    { "source": "frontend", "target": "react" },
+    { "source": "frontend", "target": "angular" },
+    { "source": "frontend", "target": "vue" }
+  ]
+}

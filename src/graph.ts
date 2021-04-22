@@ -1,12 +1,29 @@
+import {
+  forceCenter,
+  forceLink,
+  forceManyBody,
+  forceSimulation,
+  SimulationNodeDatum,
+} from 'd3-force';
 import { select } from 'd3-selection';
 
-const data = ['react', 'angular', 'vue'];
+import data from './data.json';
+import { Graph, Node, Edge } from './types';
+
+const { nodes, edges } = data as Graph;
 
 export function createGraph() {
   select('body')
     .selectAll('graph-node')
-    .data(data)
+    .data(nodes)
     .enter()
     .append('graph-node')
-    .text((d) => d);
+    .attr('data-id', (d) => d.id);
+
+  const simulation = forceSimulation<Node>(nodes)
+    .force(
+      'link',
+      forceLink<Node, Edge>(edges).id((d) => d.id)
+    )
+    .force('charge', forceManyBody());
 }
