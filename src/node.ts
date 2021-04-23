@@ -2,11 +2,14 @@ import { css } from '@emotion/css';
 import { injectGlobal } from '@emotion/css';
 
 class GraphNode extends HTMLElement {
+  clicked = 1;
+
   static get observedAttributes() {
     return ['data-id'];
   }
 
   connectedCallback() {
+    this.id = 'GraphNode';
     this.render();
   }
 
@@ -14,11 +17,16 @@ class GraphNode extends HTMLElement {
     this.render();
   }
 
+  handleClick() {
+    this.clicked++;
+    this.render();
+  }
+
   render() {
     this.innerHTML = `
       <span class=${label}>${this.getAttribute('data-id')}</span>
-      <div class=${bubbleOuter}>
-        <div class=${bubbleInner}></div>
+      <div class=${bubbleOuter} onclick="${this.id}.handleClick()">
+        <div class=${bubbleInner(this.clicked)}></div>
       </div>
     `;
   }
@@ -27,12 +35,14 @@ class GraphNode extends HTMLElement {
 injectGlobal`
   graph-node {
     display: inline-flex;
-    position: relative;
-    margin: 32px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
   }
 `;
 
 const label = css`
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 50%;
@@ -45,9 +55,9 @@ const bubbleOuter = css`
   box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.5);
 `;
 
-const bubbleInner = css`
-  width: 8px;
-  height: 8px;
+const bubbleInner = (clicked: number) => css`
+  width: ${clicked * 8}px;
+  height: ${clicked * 8}px;
   border-radius: 100%;
   background-color: #ffffff;
 `;

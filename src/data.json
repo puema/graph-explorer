@@ -1,13 +1,44 @@
 {
   "nodes": [
+    { "id": "backend" },
+    { "id":  "nodejs" },
     { "id": "frontend" },
+    { "id":  "mobile" },
+    { "id":  "android" },
+    { "id":  "ios" },
+    { "id":  "react-native" },
+    { "id": "web" },
     { "id": "react" },
     { "id": "angular" },
-    { "id": "vue" }
+    { "id": "svelte" },
+    { "id": "vue" },
+    { "id": "databases" },
+    { "id": "relational" },
+    { "id": "postgres" },
+    { "id": "my-sql" },
+    { "id": "non-relational" },
+    { "id": "mongodb" },
+    { "id": "firebase" }
   ],
   "edges": [
-    { "source": "frontend", "target": "react" },
-    { "source": "frontend", "target": "angular" },
-    { "source": "frontend", "target": "vue" }
+    { "source": "web", "target": "react" },
+    { "source": "web", "target": "angular" },
+    { "source": "web", "target": "vue" },
+    { "source": "web", "target": "svelte" },
+    { "source": "mobile", "target": "ios" },
+    { "source": "mobile", "target": "android" },
+    { "source": "mobile", "target": "react-native" },
+    { "source": "frontend", "target": "web" },
+    { "source": "frontend", "target": "mobile" },
+    { "source": "backend", "target": "nodejs" },
+    { "source": "backend", "target": "frontend" },
+    { "source": "backend", "target": "databases" },
+    { "source": "databases", "target": "relational" },
+    { "source": "databases", "target": "non-relational" },
+    { "source": "databases", "target": "relational" },
+    { "source": "relational", "target": "postgres" },
+    { "source": "relational", "target": "my-sql" },
+    { "source": "non-relational", "target": "mongodb" },
+    { "source": "non-relational", "target": "firebase" }
   ]
 }

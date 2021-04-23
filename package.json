@@ -9,7 +9,8 @@
     "start": "yarn webpack serve --config config/webpack.config.js"
   },
   "sideEffects": [
-    "./src/node.ts"
+    "./src/node.ts",
+    "./src/inded.ts"
   ],
   "devDependencies": {
     "@types/d3": "^6.3.0",

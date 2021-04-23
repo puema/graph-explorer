@@ -1,14 +1,44 @@
 import { select } from 'd3-selection';
-import { css } from '@emotion/css';
+import { css, injectGlobal } from '@emotion/css';
 
 import './node';
 import { createGraph } from './graph';
 
-const body = css`
-  background-color: #121212;
-  color: #b3b3b3;
-  font-family: 'Open Sans', Roboto, 'Helvetica Neue', sans-serif;
+injectGlobal`
+  body {
+    background-color: #121212;
+    color: #b3b3b3;
+    font-family: 'Open Sans', Roboto, 'Helvetica Neue', sans-serif;
+    margin: 0;
+  }
+  
+  button {
+    background-color: #282828;
+    border-radius: 99px;
+    border: none;
+    color: #eeeeee;
+    padding: 8px 16px;
+  }
 `;
 
-select('body').attr('class', body);
-select('button').on('click', createGraph);
+// const regenerate = css`
+//   position: fixed;
+//   top: 16px;
+//   left: 16px;
+// `;
+
+const svg = css``;
+
+const body = select('body');
+// body
+//   .append('button')
+//   .text('regenerate')
+//   .attr('class', regenerate)
+//   .on('click', createGraph);
+body
+  .append('svg')
+  .attr('width', '100vw')
+  .attr('height', '100vh')
+  .attr('class', svg);
+
+createGraph();
