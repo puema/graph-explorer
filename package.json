@@ -1,12 +1,13 @@
 {
   "private": true,
   "license": "NO LICENSE",
-  "name": "buzzword-map",
+  "name": "tech-map",
   "version": "0.1.0",
   "description": "Interactive map of tech buzzwords relevant at Netlight",
   "author": "Netlight",
   "scripts": {
-    "start": "yarn webpack serve --config config/webpack.config.js"
+    "start": "yarn webpack serve --config config/webpack.config.js",
+    "build": "yarn webpack --config config/webpack.config.js"
   },
   "sideEffects": [
     "./src/node.ts",
