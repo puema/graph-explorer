@@ -3,8 +3,6 @@ import {
   forceLink,
   forceManyBody,
   forceSimulation,
-  forceX,
-  forceY,
 } from 'd3-force';
 import { select } from 'd3-selection';
 
@@ -33,7 +31,9 @@ export function createGraph() {
     .data(nodes)
     .enter()
     .append('graph-node')
-    .attr('data-id', (d) => d.id)
+    .property('id', (d) => d.id)
+    .property('description', (d) => d.description)
+    .on('click', handleClick)
     .call(drag(simulation) as any);
 
   const strokes = select('svg')
@@ -43,6 +43,10 @@ export function createGraph() {
     .selectAll('line')
     .data(edges)
     .join('line');
+
+  function handleClick(event: any) {
+    if (event.defaultPrevented) return;
+  }
 
   simulation.on('tick', () => {
     nodeElements
