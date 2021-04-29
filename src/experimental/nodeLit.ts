@@ -32,7 +32,9 @@ class GraphNode extends LitElement {
       <div class=${bubbleOuter(this.isOpen)} @click=${this.handleClick}>
         <div class=${bubbleInner(this.isOpen)}>
           <div class=${content(this.isOpen)}>
-            ${this.isOpen ? this.description : ''}
+            <size-transition in=${this.isOpen}>
+              <span>${this.description}</span>
+            </size-transition>
           </div>
         </div>
       </div>
@@ -77,8 +79,7 @@ const bubbleOuter = (isOpen: boolean) => css`
 `;
 
 const bubbleInner = (isOpen: boolean) => css`
-  width: ${isOpen ? '200px' : '8px'};
-  height: ${isOpen ? '150px' : '8px'};
+  padding: 4px;
   border-radius: 8px;
   background-color: ${isOpen ? '#282828' : '#ffffff'};
   overflow: hidden;

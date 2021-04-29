@@ -9,6 +9,7 @@ import { select } from 'd3-selection';
 import data from './data.json';
 import drag from './drag';
 import { Edge, Graph, Node } from './types';
+import renderNode from './renderNode';
 
 const { nodes, edges } = data as Graph;
 
@@ -27,13 +28,14 @@ export function createGraph() {
     );
 
   const nodeElements = select('body')
-    .selectAll('graph-node')
+    .selectAll('node')
     .data(nodes)
     .enter()
-    .append('graph-node')
+    .append<HTMLElement>('node')
     .property('id', (d) => d.id)
     .property('description', (d) => d.description)
     .on('click', handleClick)
+    .each(renderNode)
     .call(drag(simulation) as any);
 
   const strokes = select('svg')

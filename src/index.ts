@@ -1,7 +1,6 @@
 import { select } from 'd3-selection';
 import { css, injectGlobal } from '@emotion/css';
 
-import './node';
 import { createGraph } from './graph';
 
 injectGlobal`
@@ -21,20 +20,10 @@ injectGlobal`
   }
 `;
 
-// const regenerate = css`
-//   position: fixed;
-//   top: 16px;
-//   left: 16px;
-// `;
-
 const svg = css``;
 
 const body = select('body');
-// body
-//   .append('button')
-//   .text('regenerate')
-//   .attr('class', regenerate)
-//   .on('click', createGraph);
+
 body
   .append('svg')
   .attr('width', '100vw')
