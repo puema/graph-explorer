@@ -31,17 +31,17 @@ export default function Node({ index, data, host }: NodeProps) {
   };
 
   return (
-    <>
+    <div
+      className={node(canBeOpened)}
+      ref={focusRef}
+      tabIndex={when(canBeOpened) && index}
+      onClick={open}
+      onBlur={blurred}
+    >
       <span className={label(isOpen)} onClick={open}>
         {name}
       </span>
-      <div
-        ref={focusRef}
-        tabIndex={when(canBeOpened) && index}
-        className={bubbleOuter(isOpen)}
-        onClick={open}
-        onBlur={blurred}
-      >
+      <div className={bubbleOuter(isOpen)}>
         <div className={bubbleInner(isOpen)}>
           <SizeTransition in={isOpen}>
             {description && (
@@ -52,7 +52,7 @@ export default function Node({ index, data, host }: NodeProps) {
           </SizeTransition>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -61,11 +61,17 @@ injectGlobal`
     display: inline-flex;
     position: absolute;
     transform: translate(-50%, -50%);
-    cursor: pointer;
-    
-    a, a:hover, a:active, a:visited {
-      color: inherit;
-    }
+  }
+`;
+
+const node = (canBeOpened: boolean) => css`
+  cursor: ${canBeOpened && 'pointer'};
+
+  a,
+  a:hover,
+  a:active,
+  a:visited {
+    color: inherit;
   }
 `;
 

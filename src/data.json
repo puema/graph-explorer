@@ -29,14 +29,14 @@
       "id": "react",
       "data": {
         "name": "React",
-        "description": "<a href=\"https://reactjs.org/\" target=\"_blank\">React</a> is a mature framework from Facebook (2013) with a huge community, large ecosystem and active development"
+        "description": "<a href=\"https://reactjs.org/\" target=\"_blank\">React</a> is a sophisticated framework from Facebook (2013) with a huge community, large ecosystem and active development."
       }
     },
     {
       "id": "angular",
       "data": {
         "name": "Angular",
-        "description": "You will find a description here at some point"
+        "description": "In terms of web-development <a href=\"https://angular.io/\" target=\"_blank\">Angular</a> is an already old framework. Initially released in 2010 as \"AngularJS\" by Google, it was completely rewritten with the version 2.0 and called just Angular"
       }
     },
     {
@@ -50,7 +50,7 @@
       "id": "vue",
       "data": {
         "name": "Vue",
-        "description": "You will find a description here at some point"
+        "description": "<a href=\"https://vuejs.org/\" target=\"_blank\">Vue.js</a> is kind of a mix of both Angular and React and tries to combine the benefits of both frameworks."
       }
     },
     {
