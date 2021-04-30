@@ -1,8 +1,13 @@
 import { SimulationLinkDatum, SimulationNodeDatum } from 'd3-force';
 
+export interface NodeData {
+  name: string;
+  description?: string;
+}
+
 export interface Node extends SimulationNodeDatum {
   id: string;
-  description: string;
+  data: NodeData;
 }
 
 export interface Edge extends SimulationLinkDatum<Node> {}

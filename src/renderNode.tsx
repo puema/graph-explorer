@@ -4,9 +4,14 @@ import React from 'react';
 
 import NodeComponent from './Node';
 
-export default function renderNode(this: HTMLElement, node: Node) {
+export default function renderNode(
+  this: HTMLElement,
+  node: Node,
+  index: number
+) {
   const props = {
     host: this,
+    index,
     ...node,
   };
 

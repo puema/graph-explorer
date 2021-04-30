@@ -1,36 +1,123 @@
 {
   "nodes": [
-    { "id": "backend", "description": "You will find a description here at some point" },
-    { "id":  "nodejs", "description": "You will find a description here at some point" },
-    { "id": "frontend", "description": "You will find a description here at some point" },
-    { "id":  "mobile", "description": "You will find a description here at some point" },
-    { "id":  "android", "description": "You will find a description here at some point" },
-    { "id":  "ios", "description": "You will find a description here at some point" },
-    { "id":  "react-native", "description": "You will find a description here at some point" },
-    { "id": "web", "description": "You will find a description here at some point" },
-    { "id": "react", "description": "You will find a description here at some point" },
-    { "id": "angular", "description": "You will find a description here at some point" },
-    { "id": "svelte", "description": "You will find a description here at some point" },
-    { "id": "vue", "description": "You will find a description here at some point" },
-    { "id": "databases", "description": "You will find a description here at some point" },
-    { "id": "relational", "description": "You will find a description here at some point" },
-    { "id": "postgres", "description": "You will find a description here at some point" },
-    { "id": "my-sql", "description": "You will find a description here at some point" },
-    { "id": "non-relational", "description": "You will find a description here at some point" },
-    { "id": "mongodb", "description": "You will find a description here at some point" },
-    { "id": "firebase", "description": "You will find a description here at some point" }
+    {
+      "id": "languages",
+      "data": {
+        "name": "Languages"
+      }
+    },
+    {
+      "id": "fe-frameworks",
+      "data": {
+        "name": "Frameworks"
+      }
+    },
+    {
+      "id": "frontend",
+      "data": {
+        "name": "Frontend"
+      }
+    },
+    {
+      "id": "web",
+      "data": {
+        "name": "Web",
+        "description": "Anything related to applications that are suitable for running in a browser"
+      }
+    },
+    {
+      "id": "react",
+      "data": {
+        "name": "React",
+        "description": "<a href=\"https://reactjs.org/\" target=\"_blank\">React</a> is a mature framework from Facebook (2013) with a huge community, large ecosystem and active development"
+      }
+    },
+    {
+      "id": "angular",
+      "data": {
+        "name": "Angular",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "svelte",
+      "data": {
+        "name": "Svelte",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "vue",
+      "data": {
+        "name": "Vue",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "backend",
+      "data": {
+        "name": "Backend",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "databases",
+      "data": {
+        "name": "Databases",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "relational",
+      "data": {
+        "name": "Relational",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "postgres",
+      "data": {
+        "name": "Postgres",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "my-sql",
+      "data": {
+        "name": "MySQL",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "non-relational",
+      "data": {
+        "name": "Non-Relational",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "mongodb",
+      "data": {
+        "name": "Mongodb",
+        "description": "You will find a description here at some point"
+      }
+    },
+    {
+      "id": "firebase",
+      "data": {
+        "name": "Firebase",
+        "description": "You will find a description here at some point"
+      }
+    }
   ],
   "edges": [
-    { "source": "web", "target": "react" },
-    { "source": "web", "target": "angular" },
-    { "source": "web", "target": "vue" },
-    { "source": "web", "target": "svelte" },
-    { "source": "mobile", "target": "ios" },
-    { "source": "mobile", "target": "android" },
-    { "source": "mobile", "target": "react-native" },
+    { "source": "fe-frameworks", "target": "react" },
+    { "source": "fe-frameworks", "target": "angular" },
+    { "source": "fe-frameworks", "target": "vue" },
+    { "source": "fe-frameworks", "target": "svelte" },
+    { "source": "web", "target": "fe-frameworks" },
     { "source": "frontend", "target": "web" },
-    { "source": "frontend", "target": "mobile" },
-    { "source": "backend", "target": "nodejs" },
+    { "source": "web", "target": "languages" },
     { "source": "backend", "target": "frontend" },
     { "source": "backend", "target": "databases" },
     { "source": "databases", "target": "relational" },

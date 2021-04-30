@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import styled from '@emotion/styled';
+import { css, cx } from '@emotion/css';
 
 export interface SizeTransitionProps {
   in: boolean;
@@ -98,18 +98,18 @@ export const SizeTransition = ({
   };
 
   return (
-    <StyledSizeAnimation
-      className={className}
+    <div
+      className={cx(className, root)}
       style={stateToSize()}
       ref={ref}
       onTransitionEnd={handleTransitionEnd}
     >
       {children}
-    </StyledSizeAnimation>
+    </div>
   );
 };
 
-const StyledSizeAnimation = styled.div`
+const root = css`
   overflow: hidden;
   transition: all 300ms ease;
 `;

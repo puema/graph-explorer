@@ -32,8 +32,6 @@ export function createGraph() {
     .data(nodes)
     .enter()
     .append<HTMLElement>('node')
-    .property('id', (d) => d.id)
-    .property('description', (d) => d.description)
     .on('click', handleClick)
     .each(renderNode)
     .call(drag(simulation) as any);

@@ -1,45 +1,54 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { injectGlobal, css } from '@emotion/css';
 import { SizeTransition } from './SizeTransition';
+import { NodeData } from './types';
+import { when } from './utils';
 
-export default function Node({ id, description, host }: any) {
+interface NodeProps {
+  id: string;
+  index: number;
+  host: HTMLElement;
+  data: NodeData;
+}
+
+export default function Node({ index, data, host }: NodeProps) {
+  const { name, description } = data;
   const [isOpen, setIsOpen] = useState(false);
   const focusRef = useRef<HTMLDivElement>(null);
+  const canBeOpened = !!description;
 
   useEffect(() => {
     host.style.zIndex = isOpen ? '1' : '';
   }, [isOpen]);
 
-  useEffect(() => {
-    const blurred = () => {
-      setIsOpen(false);
-    };
-
-    focusRef.current!.setAttribute('contentEditable', 'true');
-    focusRef.current!.setAttribute('contentEditable', 'true');
-    focusRef.current!.addEventListener('blur', blurred);
-
-    return () => {
-      focusRef.current!.setAttribute('contentEditable', '');
-      focusRef.current!.removeEventListener('blur', blurred);
-    };
-  });
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
+  const open = () => canBeOpened && setIsOpen(true);
+  const blurred = (event: React.FocusEvent<HTMLDivElement>) => {
+    const clickedInside = focusRef.current?.contains(
+      event.relatedTarget as Node | null
+    );
+    if (clickedInside) return;
+    setIsOpen(false);
   };
 
   return (
     <>
-      <span className={label(isOpen)} onClick={handleClick}>
-        {id}
+      <span className={label(isOpen)} onClick={open}>
+        {name}
       </span>
-      <div ref={focusRef} className={bubbleOuter(isOpen)} onClick={handleClick}>
+      <div
+        ref={focusRef}
+        tabIndex={when(canBeOpened) && index}
+        className={bubbleOuter(isOpen)}
+        onClick={open}
+        onBlur={blurred}
+      >
         <div className={bubbleInner(isOpen)}>
           <SizeTransition in={isOpen}>
-            <div className={content(isOpen)}>
-              <span>{description}</span>
-            </div>
+            {description && (
+              <div className={content(isOpen)}>
+                <span dangerouslySetInnerHTML={{ __html: description }} />
+              </div>
+            )}
           </SizeTransition>
         </div>
       </div>
@@ -53,11 +62,15 @@ injectGlobal`
     position: absolute;
     transform: translate(-50%, -50%);
     cursor: pointer;
+    
+    a, a:hover, a:active, a:visited {
+      color: inherit;
+    }
   }
 `;
 
 const transition = css`
-  transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in;
 `;
 
 const label = (isOpen: boolean) => css`
@@ -67,7 +80,7 @@ const label = (isOpen: boolean) => css`
   left: ${isOpen ? '12px' : '50%'};
   color: ${isOpen && '#cccccc'};
   transform: ${!isOpen && 'translate(-50%, calc(-100% - 4px))'};
-  transition: all 400ms ease-in-out;
+  transition: all 300ms ease-out;
 `;
 
 const content = (isOpen: boolean) => css`
@@ -79,7 +92,7 @@ const content = (isOpen: boolean) => css`
 
 const bubbleOuter = (isOpen: boolean) => css`
   &:focus {
-    outline: none;
+    //outline: none;
   }
   border-radius: 10px;
   border: solid 2px #b3b3b3;
