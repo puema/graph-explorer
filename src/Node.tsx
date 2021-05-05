@@ -11,10 +11,15 @@ interface NodeProps {
   data: NodeData;
 }
 
+const hoverTimeBeforeOpening = 700;
+const minimumTimeToLeaveOpen = 1000;
+
 export default function Node({ index, data, host }: NodeProps) {
   const { name, description } = data;
   const [isOpen, setIsOpen] = useState(false);
   const focusRef = useRef<HTMLDivElement>(null);
+  const enteredRef = useRef(0);
+  const canBeClosed = useRef<Promise<void>>();
   const canBeOpened = !!description;
 
   useEffect(() => {
@@ -22,6 +27,11 @@ export default function Node({ index, data, host }: NodeProps) {
   }, [isOpen]);
 
   const open = () => canBeOpened && setIsOpen(true);
+  const close = async () => {
+    await canBeClosed.current;
+    setIsOpen(false);
+  };
+
   const blurred = (event: React.FocusEvent<HTMLDivElement>) => {
     const clickedInside = focusRef.current?.contains(
       event.relatedTarget as Node | null
@@ -30,17 +40,49 @@ export default function Node({ index, data, host }: NodeProps) {
     setIsOpen(false);
   };
 
+  const keyPressed = (event: React.KeyboardEvent) => {
+    if (event.key === ' ' || event.key === 'Enter') {
+      if (!isOpen) open();
+      if (isOpen) close();
+    }
+    if (event.key === 'Escape') close();
+  };
+
+  const mouseEntered = () => {
+    // Clear any previously triggered opening
+    window.clearTimeout(enteredRef.current);
+    // Only open while hovering for some time
+    enteredRef.current = window.setTimeout(() => {
+      open();
+      // Keep it open for some minimum time to avoid flickering open state
+      canBeClosed.current = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, minimumTimeToLeaveOpen);
+      });
+    }, hoverTimeBeforeOpening);
+  };
+
+  const mouseLeft = () => {
+    // Clear any previously triggered opening to not open it at all,
+    // when the mouse was moved out again fast enough
+    window.clearTimeout(enteredRef.current);
+    close();
+  };
+
   return (
     <div
       className={node(canBeOpened)}
+      onMouseEnter={mouseEntered}
+      onMouseLeave={mouseLeft}
       ref={focusRef}
       tabIndex={when(canBeOpened) && index}
       onClick={open}
+      onFocus={open}
       onBlur={blurred}
+      onKeyDown={keyPressed}
     >
-      <span className={label(isOpen)} onClick={open}>
-        {name}
-      </span>
+      <span className={label(isOpen)}>{name}</span>
       <div className={bubbleOuter(isOpen)}>
         <div className={bubbleInner(isOpen)}>
           <SizeTransition in={isOpen}>
