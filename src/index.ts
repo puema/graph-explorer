@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import { css, injectGlobal } from '@emotion/css';
 
-import { createGraph } from './graph';
+import { renderGraph } from './graph';
 
 injectGlobal`
   body {
@@ -20,7 +20,10 @@ injectGlobal`
   }
 `;
 
-const svg = css``;
+const svg = css`
+  stroke: #ffffff;
+  stroke-opacity: 0.6;
+`;
 
 const body = select('body');
 
@@ -30,4 +33,4 @@ body
   .attr('height', '100vh')
   .attr('class', svg);
 
-createGraph();
+renderGraph();

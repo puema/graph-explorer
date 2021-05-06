@@ -8,9 +8,17 @@ export interface NodeData {
 export interface Node extends SimulationNodeDatum {
   id: string;
   data: NodeData;
+  isCollapsed?: boolean;
 }
 
-export interface Edge extends SimulationLinkDatum<Node> {}
+export interface Edge extends SimulationLinkDatum<Node> {
+  isCollapsed?: boolean;
+}
+
+export interface SimulatedEdge extends Edge {
+  source: Node;
+  target: Node;
+}
 
 export interface Graph {
   nodes: Node[];

@@ -77,7 +77,6 @@ export default function Node({ index, data, host }: NodeProps) {
       onMouseLeave={mouseLeft}
       ref={focusRef}
       tabIndex={when(canBeOpened) && index}
-      onClick={open}
       onFocus={open}
       onBlur={blurred}
       onKeyDown={keyPressed}
