@@ -1,42 +1,59 @@
 import {
   forceCenter,
+  forceCollide,
+  ForceLink,
   forceLink,
   forceManyBody,
   forceSimulation,
+  forceX,
+  forceY,
 } from 'd3-force';
 import { select } from 'd3-selection';
-import { rollup } from 'd3-array';
-
-import data from './data.json';
 import drag from './drag';
-import { Edge, Graph, Node, SimulatedEdge } from './types';
+import { Edge, Node } from './types';
 import renderNode from './renderNode';
-import { getDescendants } from './graphUtils';
+import { createData } from './createData';
 
-const { nodes, edges } = data as Graph;
-const childNodesMap = rollup(
-  edges,
-  (children) => children.map(({ target }) => target),
-  (edge) => edge.source
-) as Map<string, string[]>;
+const data = createData();
 
-const simulation = forceSimulation<Node>(nodes)
+const width = document.body.offsetWidth;
+const height = document.body.offsetHeight;
+const padding = 64;
+
+const simulation = forceSimulation<Node>(data.nodes)
   .force(
     'link',
-    forceLink<Node, Edge>(edges)
+    forceLink<Node, Edge>(data.edges)
       .id((d) => d.id)
       .distance(64)
   )
-  .force('charge', forceManyBody().strength(-200))
+  // .force('collision', forceCollide().radius(16))
+  .force('charge', forceManyBody().strength(-300))
   .force(
-    'center',
-    forceCenter(document.body.offsetWidth / 2, document.body.offsetHeight / 2)
-  );
+    'x',
+    forceX()
+      .x(width / 2)
+      .strength(0.01)
+  )
+  .force(
+    'y',
+    forceY()
+      .y(height / 2)
+      .strength(0.01)
+  )
+  .force('center', forceCenter(width / 2, height / 2).strength(1));
 
 export function renderGraph() {
+  const { nodes, edges } = data.flattenVisible();
+
+  function handleClick(event: any, node: Node) {
+    node.isCollapsed = !node.isCollapsed;
+    renderGraph();
+  }
+
   const nodeElements = select('body')
     .selectAll<HTMLElement, Node>('node')
-    .data(nodes.filter(({ isCollapsed }) => !isCollapsed))
+    .data(nodes, ({ id }) => id)
     .join<HTMLElement>('node')
     .on('click', handleClick)
     .each(renderNode)
@@ -44,28 +61,18 @@ export function renderGraph() {
 
   const strokes = select('svg')
     .selectAll('line')
-    .data<Edge>(edges.filter(({ isCollapsed }) => !isCollapsed))
+    .data<Edge>(edges)
     .join('line');
 
-  function handleClick(event: any, { id }: Node) {
-    const descendants = getDescendants(id, childNodesMap);
-    nodes.forEach((node) => {
-      if (descendants.has(node.id)) {
-        node.isCollapsed = !node.isCollapsed;
-      }
-    });
-    (edges as SimulatedEdge[]).forEach((edge) => {
-      if (descendants.has(edge.target.id)) {
-        edge.isCollapsed = !edge.isCollapsed;
-      }
-    });
-    renderGraph();
-  }
-
   simulation.on('tick', () => {
+    const clampX = (x: number = 0) =>
+      Math.min(width - padding, Math.max(padding, x));
+    const clampY = (y: number = 0) =>
+      Math.min(height - padding, Math.max(padding, y));
+
     nodeElements
-      .style('left', (d) => d.x + 'px')
-      .style('top', (d) => d.y + 'px');
+      .style('left', (d) => (d.x = clampX(d.x)) + 'px')
+      .style('top', (d) => (d.y = clampY(d.y)) + 'px');
 
     strokes
       .attr('x1', (d) => (d.source as any).x)
@@ -73,4 +80,8 @@ export function renderGraph() {
       .attr('x2', (d) => (d.target as any).x)
       .attr('y2', (d) => (d.target as any).y);
   });
+
+  simulation.nodes(nodes);
+  (simulation.force('link') as ForceLink<Node, Edge>).links(edges);
+  simulation.alpha(1.3).restart();
 }

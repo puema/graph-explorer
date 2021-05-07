@@ -7,7 +7,7 @@ export interface NodeData {
 
 export interface Node extends SimulationNodeDatum {
   id: string;
-  data: NodeData;
+  data?: NodeData;
   isCollapsed?: boolean;
 }
 

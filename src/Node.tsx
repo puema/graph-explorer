@@ -8,13 +8,17 @@ interface NodeProps {
   id: string;
   index: number;
   host: HTMLElement;
-  data: NodeData;
+  data?: NodeData;
 }
 
 const hoverTimeBeforeOpening = 700;
 const minimumTimeToLeaveOpen = 1000;
 
-export default function Node({ index, data, host }: NodeProps) {
+export default function Node({
+  index,
+  host,
+  data = { name: '', description: '' },
+}: NodeProps) {
   const { name, description } = data;
   const [isOpen, setIsOpen] = useState(false);
   const focusRef = useRef<HTMLDivElement>(null);
@@ -54,6 +58,7 @@ export default function Node({ index, data, host }: NodeProps) {
     // Only open while hovering for some time
     enteredRef.current = window.setTimeout(() => {
       open();
+      focusRef.current!.focus();
       // Keep it open for some minimum time to avoid flickering open state
       canBeClosed.current = new Promise((resolve) => {
         setTimeout(() => {
@@ -67,21 +72,22 @@ export default function Node({ index, data, host }: NodeProps) {
     // Clear any previously triggered opening to not open it at all,
     // when the mouse was moved out again fast enough
     window.clearTimeout(enteredRef.current);
-    close();
+    // close();
   };
 
   return (
-    <div
-      className={node(canBeOpened)}
-      onMouseEnter={mouseEntered}
-      onMouseLeave={mouseLeft}
-      ref={focusRef}
-      tabIndex={when(canBeOpened) && index}
-      onFocus={open}
-      onBlur={blurred}
-      onKeyDown={keyPressed}
-    >
-      <span className={label(isOpen)}>{name}</span>
+    <div className={node}>
+      <span
+        className={label(canBeOpened, isOpen)}
+        onMouseEnter={mouseEntered}
+        onMouseLeave={mouseLeft}
+        ref={focusRef}
+        tabIndex={when(canBeOpened) && index}
+        onFocus={open}
+        onBlur={blurred}
+      >
+        {name}
+      </span>
       <div className={bubbleOuter(isOpen)}>
         <div className={bubbleInner(isOpen)}>
           <SizeTransition in={isOpen}>
@@ -105,9 +111,7 @@ injectGlobal`
   }
 `;
 
-const node = (canBeOpened: boolean) => css`
-  cursor: ${canBeOpened && 'pointer'};
-
+const node = css`
   a,
   a:hover,
   a:active,
@@ -120,7 +124,10 @@ const transition = css`
   transition: all 300ms ease-in;
 `;
 
-const label = (isOpen: boolean) => css`
+const label = (canBeOpened: boolean, isOpen: boolean) => css`
+  &:focus {
+    outline: none;
+  }
   z-index: 1;
   position: absolute;
   top: ${isOpen ? '12px' : '0'};
@@ -128,6 +135,7 @@ const label = (isOpen: boolean) => css`
   color: ${isOpen && '#cccccc'};
   transform: ${!isOpen && 'translate(-50%, calc(-100% - 4px))'};
   transition: all 300ms ease-out;
+  cursor: ${canBeOpened ? 'help' : 'default'};
 `;
 
 const content = (isOpen: boolean) => css`
@@ -138,9 +146,6 @@ const content = (isOpen: boolean) => css`
 `;
 
 const bubbleOuter = (isOpen: boolean) => css`
-  &:focus {
-    //outline: none;
-  }
   border-radius: 10px;
   border: solid 2px #b3b3b3;
   box-shadow: ${!isOpen && '0 0 8px 4px rgba(255, 255, 255, 0.5)'};

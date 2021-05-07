@@ -1461,6 +1461,11 @@ d3-force@^2.1.1:
     d3-quadtree "1 - 2"
     d3-timer "1 - 2"
 
+d3-hierarchy@^2.0.0:
+  version "2.0.0"
+  resolved "https://verdaccio.deploy.evelin.jsmd-group.com/d3-hierarchy/-/d3-hierarchy-2.0.0.tgz#dab88a58ca3e7a1bc6cab390e89667fcc6d20218"
+  integrity sha512-SwIdqM3HxQX2214EG9GTjgmCc/mbSx4mQBn+DuEETubhOw6/U3fmnji4uCVrmzOydMHSO1nZle5gh6HB/wdOzw==
+
 "d3-quadtree@1 - 2":
   version "2.0.0"
   resolved "https://verdaccio.deploy.evelin.jsmd-group.com/d3-quadtree/-/d3-quadtree-2.0.0.tgz"

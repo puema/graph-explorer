@@ -7,6 +7,24 @@
       }
     },
     {
+      "id": "tech-map",
+      "data": {
+        "name": "Tech-Map"
+      }
+    },
+    {
+      "id": "javascript",
+      "data": {
+        "name": "JavaScript"
+      }
+    },
+    {
+      "id": "typescript",
+      "data": {
+        "name": "TypeScript"
+      }
+    },
+    {
       "id": "fe-frameworks",
       "data": {
         "name": "Frameworks"
@@ -118,11 +136,13 @@
     { "source": "web", "target": "fe-frameworks" },
     { "source": "frontend", "target": "web" },
     { "source": "web", "target": "languages" },
-    { "source": "backend", "target": "frontend" },
+    { "source": "languages", "target": "javascript" },
+    { "source": "languages", "target": "typescript" },
+    { "source": "tech-map", "target": "backend" },
+    { "source": "tech-map", "target": "frontend" },
     { "source": "backend", "target": "databases" },
     { "source": "databases", "target": "relational" },
     { "source": "databases", "target": "non-relational" },
-    { "source": "databases", "target": "relational" },
     { "source": "relational", "target": "postgres" },
     { "source": "relational", "target": "my-sql" },
     { "source": "non-relational", "target": "mongodb" },
