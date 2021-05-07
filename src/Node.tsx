@@ -85,6 +85,7 @@ export default function Node({
         tabIndex={when(canBeOpened) && index}
         onFocus={open}
         onBlur={blurred}
+        onKeyDown={keyPressed}
       >
         {name}
       </span>
