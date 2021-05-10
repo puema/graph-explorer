@@ -1,8 +1,8 @@
 import { select } from 'd3-selection';
-import { color } from 'd3-color';
 import { css, injectGlobal } from '@emotion/css';
 
-import { renderGraph } from './graph';
+import { renderGraph } from './d3/graph';
+import { state } from './d3/state';
 
 injectGlobal`
   body {
@@ -35,11 +35,14 @@ const collapse = css`
 
 const body = select('body');
 
-// body
-//   .append('button')
-//   .text('COLLAPSE ALL')
-//   .attr('class', collapse)
-//   .on('click', () => window.alert('not yet implemented'));
+body
+  .append('button')
+  .text('COLLAPSE ALL')
+  .attr('class', collapse)
+  .on('click', () => {
+    state.toggleAll();
+    renderGraph();
+  });
 
 body
   .append('svg')

@@ -1,4 +1,4 @@
-import { Node } from './types';
+import { Node } from '../d3/types';
 import { render } from 'react-dom';
 import React from 'react';
 

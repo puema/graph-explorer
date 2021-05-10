@@ -1,10 +1,10 @@
-import { group, index, rollup } from 'd3-array';
-import data from './data.json';
-import { Node, Edge, Graph } from './types';
+import { group, index } from 'd3-array';
+import data from '../data.json';
+import { Edge, Graph, Node } from './types';
 
 const { nodes: rawNodes, edges: rawEdges } = data as Graph;
 
-interface InternalData {
+interface Context {
   nodes: Node[];
   edges: Edge[];
   rootIds: string[];
@@ -12,44 +12,46 @@ interface InternalData {
   idToNode: Map<string, Node>;
   depth: number;
   flattenVisible(): { nodes: Node[]; edges: Edge[] };
+  toggleAll(): void;
 }
 
-export function createData() {
+export const state = createState();
+
+export function createState() {
   const nodes = [...rawNodes];
   const edges = [...rawEdges];
-
-  const sourceIdToEdges = group(edges, (edge) => edge.source) as Map<
-    string,
-    Edge[]
-  >;
-
-  const idToNode = index(nodes, (node) => node.id);
-
-  const rootIds = getRootIds(nodes, edges);
 
   const context = {
     nodes,
     edges,
-    rootIds,
-    sourceIdToEdges,
-    idToNode,
+    rootIds: getRootIds(nodes, edges),
+    sourceIdToEdges: group(edges, (edge) => edge.source) as Map<string, Edge[]>,
+    idToNode: index(nodes, (node) => node.id),
     depth: 0,
     traverse,
     flattenVisible,
+    toggleAll,
   };
 
   context.traverse();
 
   for (const node of nodes) {
     node.depth = context.depth;
-    if (!sourceIdToEdges.has(node.id)) {
+    if (!context.sourceIdToEdges.has(node.id)) {
       node.isLeafNode = true;
     }
   }
 
   return {
     flattenVisible: () => context.flattenVisible(),
+    toggleAll: () => context.toggleAll(),
   };
+}
+
+function toggleAll(this: Context) {
+  for (const node of this.nodes) {
+    node.isCollapsed = !node.isCollapsed;
+  }
 }
 
 function getRootIds(nodes: Node[], edges: Edge[]) {
@@ -71,7 +73,7 @@ function getRootIds(nodes: Node[], edges: Edge[]) {
     .map(([key]) => key);
 }
 
-function traverse(this: InternalData) {
+function traverse(this: Context) {
   const visited = new Set<string>();
 
   const recurse = (node: Node, level = 0) => {
@@ -92,7 +94,7 @@ function traverse(this: InternalData) {
   }
 }
 
-function flattenVisible(this: InternalData) {
+function flattenVisible(this: Context) {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 

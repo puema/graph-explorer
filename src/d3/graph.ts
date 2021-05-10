@@ -3,14 +3,12 @@ import { select } from 'd3-selection';
 
 import drag from './drag';
 import { Edge, Node } from './types';
-import renderNode from './renderNode';
-import { createData } from './createData';
+import renderNode from '../react/renderNode';
 import { height, padding, simulation, width } from './simulation';
-
-const data = createData();
+import { state } from './state';
 
 export function renderGraph() {
-  const { nodes, edges } = data.flattenVisible();
+  const { nodes, edges } = state.flattenVisible();
 
   function handleClick(event: any, node: Node) {
     node.isCollapsed = !node.isCollapsed;

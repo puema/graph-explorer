@@ -4,7 +4,7 @@ import { scaleLinear } from 'd3-scale';
 import { color as d3Color } from 'd3-color';
 
 import { SizeTransition } from './SizeTransition';
-import { NodeData } from './types';
+import { NodeData } from '../d3/types';
 import { when } from './utils';
 
 interface NodeProps {
