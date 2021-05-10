@@ -10,7 +10,6 @@ export default function (simulation: Simulation<Node, undefined>) {
   }
 
   function handleDrag(event: any) {
-    console.log('debug handleDrag, line 13:', event)
     event.subject.fx = event.x;
     event.subject.fy = event.y;
   }

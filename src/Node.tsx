@@ -1,5 +1,8 @@
-import React, { FocusEventHandler, useEffect, useRef, useState } from 'react';
-import { injectGlobal, css } from '@emotion/css';
+import React, { useEffect, useRef, useState } from 'react';
+import { css, injectGlobal } from '@emotion/css';
+import { scaleLinear } from 'd3-scale';
+import { color as d3Color } from 'd3-color';
+
 import { SizeTransition } from './SizeTransition';
 import { NodeData } from './types';
 import { when } from './utils';
@@ -10,15 +13,22 @@ interface NodeProps {
   host: HTMLElement;
   data?: NodeData;
   isLeafNode?: boolean;
+  level?: number;
+  depth?: number;
 }
 
 const hoverTimeBeforeOpening = 700;
 const minimumTimeToLeaveOpen = 1000;
 
+/**
+ * Pure visualization of a node component, shouldn't hold any graph logic but receives every needed data
+ */
 export default function Node({
   index,
   host,
   isLeafNode,
+  level = 0,
+  depth = 0,
   data = { name: '', description: '' },
 }: NodeProps) {
   const { name, description } = data;
@@ -27,6 +37,14 @@ export default function Node({
   const enteredRef = useRef(0);
   const canBeClosed = useRef<Promise<void>>();
   const canBeOpened = !!description;
+
+  const color = scaleLinear<string>()
+    .domain([0, depth / 2, depth])
+    .range([
+      d3Color('#2C3F6B')!.brighter(2.5).toString(),
+      '#A6A2DC',
+      '#FFACAC',
+    ])(level);
 
   useEffect(() => {
     host.style.zIndex = isOpen ? '1' : '';
@@ -91,8 +109,8 @@ export default function Node({
       >
         {name}
       </span>
-      <div className={bubbleOuter(isOpen)}>
-        <div className={bubbleInner(isOpen)}>
+      <div className={bubbleOuter(color, isOpen)}>
+        <div className={bubbleInner(color, isOpen)}>
           <SizeTransition in={isOpen}>
             {description && (
               <div className={content(isOpen)}>
@@ -105,6 +123,8 @@ export default function Node({
     </div>
   );
 }
+
+const diameter = 10;
 
 injectGlobal`
   node {
@@ -149,17 +169,24 @@ const content = (isOpen: boolean) => css`
   ${transition}
 `;
 
-const bubbleOuter = (isOpen: boolean) => css`
-  border-radius: 10px;
-  border: solid 2px #b3b3b3;
-  box-shadow: ${!isOpen && '0 0 8px 4px rgba(255, 255, 255, 0.5)'};
-  ${transition}
-`;
+const bubbleOuter = (color: string, isOpen: boolean) => {
+  const glow = d3Color(color)?.brighter();
+  const light = d3Color(color);
+  light!.opacity = 0.7;
+  glow!.opacity = 0.5;
+  const borderWidth = 2;
+  return css`
+    border-radius: ${diameter + borderWidth}px;
+    border: solid ${borderWidth}px ${light + ''};
+    box-shadow: ${!isOpen && `0 0 8px 4px ${glow}`};
+    ${transition}
+  `;
+};
 
-const bubbleInner = (isOpen: boolean) => css`
-  padding: 4px;
-  border-radius: 8px;
-  background-color: ${isOpen ? '#282828' : '#ffffff'};
+const bubbleInner = (color: string, isOpen: boolean) => css`
+  padding: ${diameter / 2}px;
+  border-radius: ${diameter}px;
+  background-color: ${isOpen ? '#282828' : color};
   overflow: hidden;
   ${transition}
 `;

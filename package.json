@@ -46,6 +46,8 @@
     "d3-drag": "^2.0.0",
     "d3-force": "^2.1.1",
     "d3-hierarchy": "^2.0.0",
+    "d3-interpolate": "^2.0.1",
+    "d3-scale": "^3.3.0",
     "d3-selection": "^2.0.0",
     "lit": "^2.0.0-rc.1",
     "react": "^17.0.2",

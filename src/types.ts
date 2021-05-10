@@ -10,6 +10,8 @@ export interface Node extends SimulationNodeDatum {
   data?: NodeData;
   isCollapsed?: boolean;
   isLeafNode?: boolean;
+  level?: number;
+  depth?: number;
 }
 
 export interface Edge extends SimulationLinkDatum<Node> {
