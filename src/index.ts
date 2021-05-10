@@ -1,4 +1,5 @@
 import { select } from 'd3-selection';
+import { color } from 'd3-color';
 import { css, injectGlobal } from '@emotion/css';
 
 import { renderGraph } from './graph';
@@ -12,10 +13,11 @@ injectGlobal`
   }
   
   button {
-    background-color: #282828;
+    background-color: #ffacac;
+    box-shadow: 0 0 8px 4px rgb(255, 172, 172, 0.5);
     border-radius: 99px;
     border: none;
-    color: #eeeeee;
+    color: #121212;
     padding: 8px 16px;
   }
 `;
@@ -25,7 +27,19 @@ const svg = css`
   stroke-opacity: 0.6;
 `;
 
+const collapse = css`
+  position: fixed;
+  top: 16px;
+  left: 16px;
+`;
+
 const body = select('body');
+
+// body
+//   .append('button')
+//   .text('COLLAPSE ALL')
+//   .attr('class', collapse)
+//   .on('click', () => window.alert('not yet implemented'));
 
 body
   .append('svg')
