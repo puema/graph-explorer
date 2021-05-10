@@ -27,6 +27,12 @@ export function createData(): DataSource {
 
   const rootIds = getRootIds(nodes, edges);
 
+  for (const node of nodes) {
+    if (!sourceIdToEdges.has(node.id)) {
+      node.isLeafNode = true;
+    }
+  }
+
   return {
     nodes,
     edges,

@@ -9,6 +9,7 @@ interface NodeProps {
   index: number;
   host: HTMLElement;
   data?: NodeData;
+  isLeafNode?: boolean;
 }
 
 const hoverTimeBeforeOpening = 700;
@@ -17,6 +18,7 @@ const minimumTimeToLeaveOpen = 1000;
 export default function Node({
   index,
   host,
+  isLeafNode,
   data = { name: '', description: '' },
 }: NodeProps) {
   const { name, description } = data;
@@ -72,20 +74,20 @@ export default function Node({
     // Clear any previously triggered opening to not open it at all,
     // when the mouse was moved out again fast enough
     window.clearTimeout(enteredRef.current);
-    // close();
   };
 
   return (
-    <div className={node}>
+    <div
+      className={node(isOpen, !!isLeafNode)}
+      ref={focusRef}
+      tabIndex={when(canBeOpened) && index}
+      onBlur={blurred}
+      onKeyDown={keyPressed}
+    >
       <span
         className={label(canBeOpened, isOpen)}
         onMouseEnter={mouseEntered}
         onMouseLeave={mouseLeft}
-        ref={focusRef}
-        tabIndex={when(canBeOpened) && index}
-        onFocus={open}
-        onBlur={blurred}
-        onKeyDown={keyPressed}
       >
         {name}
       </span>
@@ -112,13 +114,14 @@ injectGlobal`
   }
 `;
 
-const node = css`
+const node = (isOpen: boolean, isLeafNode: boolean) => css`
   a,
   a:hover,
   a:active,
   a:visited {
     color: inherit;
   }
+  cursor: ${!isOpen && !isLeafNode && 'pointer'};
 `;
 
 const transition = css`
@@ -136,7 +139,7 @@ const label = (canBeOpened: boolean, isOpen: boolean) => css`
   color: ${isOpen && '#cccccc'};
   transform: ${!isOpen && 'translate(-50%, calc(-100% - 4px))'};
   transition: all 300ms ease-out;
-  cursor: ${canBeOpened ? 'help' : 'default'};
+  cursor: ${canBeOpened && !isOpen ? 'help' : 'default'};
 `;
 
 const content = (isOpen: boolean) => css`

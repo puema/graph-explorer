@@ -9,6 +9,7 @@ export interface Node extends SimulationNodeDatum {
   id: string;
   data?: NodeData;
   isCollapsed?: boolean;
+  isLeafNode?: boolean;
 }
 
 export interface Edge extends SimulationLinkDatum<Node> {
