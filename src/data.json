@@ -61,7 +61,7 @@
       "id": "svelte",
       "data": {
         "name": "Svelte",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
@@ -75,56 +75,56 @@
       "id": "backend",
       "data": {
         "name": "Backend",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
       "id": "databases",
       "data": {
         "name": "Databases",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
       "id": "relational",
       "data": {
         "name": "Relational",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
       "id": "postgres",
       "data": {
         "name": "Postgres",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
       "id": "my-sql",
       "data": {
         "name": "MySQL",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
       "id": "non-relational",
       "data": {
         "name": "Non-Relational",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
       "id": "mongodb",
       "data": {
         "name": "Mongodb",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     },
     {
       "id": "firebase",
       "data": {
         "name": "Firebase",
-        "description": "You will find a description here at some point"
+        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
       }
     }
   ],

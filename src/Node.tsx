@@ -141,6 +141,9 @@ const node = (isOpen: boolean, isLeafNode: boolean) => css`
   a:visited {
     color: inherit;
   }
+  &:focus {
+    outline: none;
+  }
   cursor: ${!isOpen && !isLeafNode && 'pointer'};
 `;
 
@@ -149,9 +152,6 @@ const transition = css`
 `;
 
 const label = (canBeOpened: boolean, isOpen: boolean) => css`
-  &:focus {
-    outline: none;
-  }
   z-index: 1;
   position: absolute;
   top: ${isOpen ? '12px' : '0'};
