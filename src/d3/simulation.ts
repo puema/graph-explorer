@@ -8,8 +8,8 @@ import {
 } from 'd3-force';
 import { Edge, Node } from './types';
 
-export const width = document.body.offsetWidth;
-export const height = document.body.offsetHeight;
+export const width = window.innerWidth;
+export const height = window.innerHeight;
 export const padding = 64;
 
 export const simulation = forceSimulation<Node>()
