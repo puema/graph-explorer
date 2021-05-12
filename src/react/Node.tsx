@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  ComponentType,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { css, injectGlobal } from '@emotion/css';
 import { scaleLinear } from 'd3-scale';
 import { color as d3Color } from 'd3-color';
@@ -6,6 +12,7 @@ import { color as d3Color } from 'd3-color';
 import { SizeTransition } from './SizeTransition';
 import { NodeData } from '../d3/types';
 import { when } from './utils';
+import NodeDescription from './NodeDescription';
 
 interface NodeProps {
   id: string;
@@ -25,6 +32,7 @@ const minimumTimeToLeaveOpen = 1000;
  */
 export default function Node({
   index,
+  id,
   host,
   isLeafNode,
   level = 0,
@@ -112,11 +120,9 @@ export default function Node({
       <div className={bubbleOuter(color, isOpen)}>
         <div className={bubbleInner(color, isOpen)}>
           <SizeTransition in={isOpen}>
-            {description && (
-              <div className={content(isOpen)}>
-                <span dangerouslySetInnerHTML={{ __html: description }} />
-              </div>
-            )}
+            <div className={content(isOpen)}>
+              <NodeDescription id={id} description={description} />
+            </div>
           </SizeTransition>
         </div>
       </div>
@@ -131,6 +137,12 @@ injectGlobal`
     display: inline-flex;
     position: absolute;
     transform: translate(-50%, -50%);
+    & button {
+      background-color: inherit;
+      box-shadow: none;
+      color: #cccccc;
+      padding: 0;
+    }
   }
 `;
 

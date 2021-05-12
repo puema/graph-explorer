@@ -9,8 +9,8 @@ export interface SizeTransitionProps {
 }
 
 interface Size {
-  height: number;
-  width: number;
+  height: number | string;
+  width: number | string;
 }
 
 enum State {
