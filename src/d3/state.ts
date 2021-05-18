@@ -28,19 +28,12 @@ export function createState() {
     sourceIdToEdges: group(edges, (edge) => edge.source) as Map<string, Edge[]>,
     idToNode: index(nodes, (node) => node.id),
     depth: 0,
-    traverse,
+    init,
     flattenVisible,
     toggleAll,
   };
 
-  context.traverse();
-
-  for (const node of nodes) {
-    node.depth = context.depth;
-    if (!context.sourceIdToEdges.has(node.id)) {
-      node.isLeafNode = true;
-    }
-  }
+  context.init();
 
   return {
     flattenVisible: () => context.flattenVisible(),
@@ -73,24 +66,35 @@ function getRootIds(nodes: Node[], edges: Edge[]) {
     .map(([key]) => key);
 }
 
-function traverse(this: Context) {
+function init(this: Context) {
   const visited = new Set<string>();
 
   const recurse = (node: Node, level = 0) => {
     const { id } = node;
+
     if (visited.has(id)) return;
-    node.level = level;
     visited.add(id);
+
+    node.level = level;
+    if (!this.sourceIdToEdges.has(node.id)) {
+      node.isLeafNode = true;
+    }
     const currentEdges = this.sourceIdToEdges.get(id) ?? [];
     for (const edge of currentEdges) {
       const child = this.idToNode.get(edge.target as string)!;
-      recurse(child, (this.depth = Math.max(level + 1)));
+      const childLevel = level + 1;
+      this.depth = Math.max(this.depth, childLevel);
+      recurse(child, childLevel);
     }
   };
 
   for (const rootId of this.rootIds) {
     const rootNode = this.idToNode.get(rootId)!;
     recurse(rootNode);
+  }
+
+  for (const node of this.nodes) {
+    node.depth = this.depth;
   }
 }
 
