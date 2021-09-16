@@ -47,12 +47,12 @@ export default function Node({
   const canBeOpened = !!description;
 
   const color = scaleLinear<string>()
-    .domain([0, depth * 0.33, depth * 0.66, depth])
+    .domain([0, depth])
     .range([
       '#4185F4',
-      '#EA4335',
+      // '#EA4335',
       '#FABB05',
-      '#34A853',
+      // '#34A853',
     ])(level);
 
   useEffect(() => {
