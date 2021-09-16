@@ -13,8 +13,8 @@ injectGlobal`
   }
   
   button {
-    background-color: #ffacac;
-    box-shadow: 0 0 8px 4px rgb(255, 172, 172, 0.5);
+    background-color: #fafafa;
+    box-shadow: 0 0 8px 4px rgb(255, 255, 255, 0.5);
     border-radius: 99px;
     border: none;
     color: #121212;

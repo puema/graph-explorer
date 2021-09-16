@@ -7,9 +7,57 @@
       }
     },
     {
-      "id": "tech-map",
+      "id": "css",
       "data": {
-        "name": "Tech-Map"
+        "name": "CSS"
+      }
+    },
+    {
+      "id": "css-preprocessors",
+      "data": {
+        "name": "Preprocessors"
+      }
+    },
+    {
+      "id": "sass",
+      "data": {
+        "name": "Sass"
+      }
+    },
+    {
+      "id": "less",
+      "data": {
+        "name": "Less"
+      }
+    },
+    {
+      "id": "css-in-js",
+      "data": {
+        "name": "CSS-in-JS"
+      }
+    },
+    {
+      "id": "emotion",
+      "data": {
+        "name": "Emotion"
+      }
+    },
+    {
+      "id": "styled-components",
+      "data": {
+        "name": "Styled Components"
+      }
+    },
+    {
+      "id": "jss",
+      "data": {
+        "name": "JSS"
+      }
+    },
+    {
+      "id": "aphrodite",
+      "data": {
+        "name": "Aphrodite"
       }
     },
     {
@@ -61,7 +109,7 @@
       "id": "svelte",
       "data": {
         "name": "Svelte",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
+        "description": "Further information can go here..."
       }
     },
     {
@@ -70,65 +118,18 @@
         "name": "Vue",
         "description": "<a href=\"https://vuejs.org/\" target=\"_blank\">Vue.js</a> is kind of a mix of both Angular and React and tries to combine the benefits of both frameworks."
       }
-    },
-    {
-      "id": "backend",
-      "data": {
-        "name": "Backend",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
-    },
-    {
-      "id": "databases",
-      "data": {
-        "name": "Databases",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
-    },
-    {
-      "id": "relational",
-      "data": {
-        "name": "Relational",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
-    },
-    {
-      "id": "postgres",
-      "data": {
-        "name": "Postgres",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
-    },
-    {
-      "id": "my-sql",
-      "data": {
-        "name": "MySQL",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
-    },
-    {
-      "id": "non-relational",
-      "data": {
-        "name": "Non-Relational",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
-    },
-    {
-      "id": "mongodb",
-      "data": {
-        "name": "Mongodb",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
-    },
-    {
-      "id": "firebase",
-      "data": {
-        "name": "Firebase",
-        "description": "Want to provide a description? File a PR <a href=\"https://git-playground.netlight.com/mapu/tech-map\">here</a>"
-      }
     }
   ],
   "edges": [
+    { "source": "web", "target": "css" },
+    { "source": "css", "target": "css-preprocessors" },
+    { "source": "css", "target": "css-in-js" },
+    { "source": "css-preprocessors", "target": "less" },
+    { "source": "css-preprocessors", "target": "sass" },
+    { "source": "css-in-js", "target": "jss" },
+    { "source": "css-in-js", "target": "styled-components" },
+    { "source": "css-in-js", "target": "emotion" },
+    { "source": "css-in-js", "target": "aphrodite" },
     { "source": "fe-frameworks", "target": "react" },
     { "source": "fe-frameworks", "target": "angular" },
     { "source": "fe-frameworks", "target": "vue" },
@@ -137,15 +138,6 @@
     { "source": "frontend", "target": "web" },
     { "source": "web", "target": "languages" },
     { "source": "languages", "target": "javascript" },
-    { "source": "languages", "target": "typescript" },
-    { "source": "tech-map", "target": "backend" },
-    { "source": "tech-map", "target": "frontend" },
-    { "source": "backend", "target": "databases" },
-    { "source": "databases", "target": "relational" },
-    { "source": "databases", "target": "non-relational" },
-    { "source": "relational", "target": "postgres" },
-    { "source": "relational", "target": "my-sql" },
-    { "source": "non-relational", "target": "mongodb" },
-    { "source": "non-relational", "target": "firebase" }
+    { "source": "languages", "target": "typescript" }
   ]
 }

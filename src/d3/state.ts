@@ -48,6 +48,7 @@ function toggleAll(this: Context) {
 }
 
 function getRootIds(nodes: Node[], edges: Edge[]) {
+  console.log(nodes);
   const nodesInDegree: { [id: string]: number } = nodes.reduce(
     (res, { id }) => ({ ...res, [id]: 0 }),
     {}
@@ -70,6 +71,7 @@ function init(this: Context) {
   const visited = new Set<string>();
 
   const recurse = (node: Node, level = 0) => {
+    console.log(node);
     const { id } = node;
 
     if (visited.has(id)) return;
@@ -84,13 +86,14 @@ function init(this: Context) {
       const child = this.idToNode.get(edge.target as string)!;
       const childLevel = level + 1;
       this.depth = Math.max(this.depth, childLevel);
+      console.log(child);
       recurse(child, childLevel);
     }
   };
 
   for (const rootId of this.rootIds) {
-    const rootNode = this.idToNode.get(rootId)!;
-    recurse(rootNode);
+    const rootNode = this.idToNode.get(rootId);
+    if (rootNode) recurse(rootNode);
   }
 
   for (const node of this.nodes) {

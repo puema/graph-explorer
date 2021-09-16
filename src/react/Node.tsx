@@ -47,11 +47,12 @@ export default function Node({
   const canBeOpened = !!description;
 
   const color = scaleLinear<string>()
-    .domain([0, depth / 2, depth])
+    .domain([0, depth * 0.33, depth * 0.66, depth])
     .range([
-      d3Color('#2C3F6B')!.brighter(2.5).toString(),
-      '#A6A2DC',
-      '#FFACAC',
+      '#4185F4',
+      '#EA4335',
+      '#FABB05',
+      '#34A853',
     ])(level);
 
   useEffect(() => {
